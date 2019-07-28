@@ -2,10 +2,10 @@ server:
     port: 8091
     error:
       include-stacktrace: never
-security:
-  oauth2:
-    resource:
-      token-info-uri: http://localhost:8090/oauth/check_token
-    client:
-      client-id: web
-      client-secret: 123456
+#security:
+#  oauth2:
+#    resource:
+#      token-info-uri: http://localhost:8090/oauth/check_token
+#    client:
+#      client-id: web
+#      client-secret: 123456
