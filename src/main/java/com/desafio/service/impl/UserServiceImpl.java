@@ -31,4 +31,10 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByNameContainingIgnoreCase(name);
 	}
 
+	@Override
+	public void save(User user) {
+		userRepository.save(userRepository.findByLogin(user.getLogin())
+				.orElseThrow(() -> new IllegalArgumentException("Login não encontrado - " + user.getLogin())));
+	}
+
 }

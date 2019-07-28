@@ -8,27 +8,32 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.validator.constraints.UniqueElements;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class User {
 
 	@Id
 	@GeneratedValue	(strategy=GenerationType.IDENTITY)
+	@JsonView(Profile.PrivateView.class)
 	private Long id; 
 	
 	@NotBlank
+	@JsonView(Profile.PrivateView.class)
 	String name;
 	
 	@NotBlank
 	@Column(unique=true)
+	@JsonView(Profile.PublicView.class)
 	String login;
 	
 	@NotBlank
 	@Email(message = "Email inválido!")
+	@JsonView(Profile.PublicView.class)
 	String email;
 	
-	@NotBlank(message = "A senha não pode ser vazia")	
+	@NotBlank(message = "A senha não pode ser vazia")
+	@JsonView(Profile.PublicView.class)
 	String password;
 	
 	public String getName() {
