@@ -54,5 +54,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	private List getAuthority() {
 		return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
+	
+	@Override
+	public List<User> getAll() {
+		return userRepository.findAll();
+	}	
 
 }

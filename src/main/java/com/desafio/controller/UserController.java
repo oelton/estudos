@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.desafio.service.UserService;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
 	@Autowired
@@ -40,11 +42,15 @@ public class UserController {
 		return userService.getList(name)
 				.orElseThrow(() -> new IllegalArgumentException("Nome não encontrado - " + name));
 	}
-	
+
+	@GetMapping("/list")
+	public List<User> userName() {
+		return userService.getAll();
+	}
+
 	@PutMapping("/alter")
 	public void putUser(@RequestBody User user) {
 		userService.save(user);
 	}
-	
 
 }

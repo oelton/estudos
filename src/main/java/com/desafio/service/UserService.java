@@ -15,4 +15,6 @@ public interface UserService {
 	
 	Optional<List<User>> getList(String name);
 
+	List<User> getAll();
+
 }
