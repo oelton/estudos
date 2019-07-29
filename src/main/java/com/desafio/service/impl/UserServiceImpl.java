@@ -1,4 +1,4 @@
-package com.desafio.service.impl;
+	package com.desafio.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.desafio.dao.UserRepository;
@@ -20,9 +21,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptEncoder;
 
 	@Override
 	public void add(User user) {
+		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
 
@@ -37,9 +42,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	@Override
-	public void save(User user) {
-		userRepository.save(userRepository.findByLogin(user.getLogin())
-				.orElseThrow(() -> new IllegalArgumentException("Login não encontrado - " + user.getLogin())));
+	public void save(User user) {		
+		userRepository.save(user);				
 	}
 
 	@Override
@@ -58,6 +62,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	@Override
 	public List<User> getAll() {
 		return userRepository.findAll();
+	}
+
+	@Override
+	public void delete(Long id) {
+		userRepository.deleteById(id);		
 	}	
 
 }
